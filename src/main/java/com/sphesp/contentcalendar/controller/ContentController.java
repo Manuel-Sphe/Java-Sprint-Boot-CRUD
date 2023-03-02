@@ -34,8 +34,26 @@ public class ContentController{
     /*
         `@Requestbody`says that content will be passed as part of the request body
      */
+    @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public void create(@RequestBody Content content){
         repository.save(content);
     }
+
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{id}")
+    public void update(@RequestBody Content  content, @PathVariable Integer id){
+        if(!repository.existById(id))
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"Content not Found Exception");
+
+        repository.save(content);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id){
+        repository.deleteById(id);
+    }
+
 }
