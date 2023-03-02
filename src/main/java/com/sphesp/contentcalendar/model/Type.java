@@ -1,2 +1,7 @@
-package com.sphesp.contentcalendar.model;public enum Type {
+package com.sphesp.contentcalendar.model;
+
+public enum Type {
+    ARTICLE,
+    VIDEO,
+    CONFERENCE_TALK
 }
