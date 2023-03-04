@@ -1,5 +1,7 @@
 # Java-Sprint-Boot-CRUD
 
+![Link](https://static.javatpoint.com/springboot/images/spring-boot-architecture2.png)
+
 A Java Spring Boot backend app that performs CRUD (Create, Read, Update, Delete) operations is a web application that allows you to create, read, update, and delete data from a database. The app is built using the Spring Boot framework, which provides a set of tools and libraries for building scalable and robust web applications.
 
 The CRUD operations are implemented using RESTful APIs, which provide a standard way of accessing and manipulating resources over the internet. The app exposes endpoints for each CRUD operation, and these endpoints are mapped to specific HTTP methods (POST, GET, PUT, DELETE) based on the operation being performed.
