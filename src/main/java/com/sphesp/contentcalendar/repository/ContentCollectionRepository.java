@@ -4,10 +4,9 @@ import com.sphesp.contentcalendar.model.Content;
 import com.sphesp.contentcalendar.model.Status;
 import com.sphesp.contentcalendar.model.Type;
 import jakarta.annotation.PostConstruct;
-import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Repository;
 
-import java.net.Inet4Address;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.Optional;
 @Repository
 public class ContentCollectionRepository {
     /*
-     * We not speaking to the database yet
+     * We're not speaking to the database yet
      * But we want to keep a collection of peaces of memory together.
      */
 
@@ -28,7 +27,7 @@ public class ContentCollectionRepository {
 
     // Optional to deal with null values.
     public Optional<Content> findById(Integer id){
-        return contentList.stream().filter(c -> c.id().equals(id)).findFirst();
+        return contentList.parallelStream().filter(content -> content.id().equals(id)).findFirst();
     }
 
     @PostConstruct

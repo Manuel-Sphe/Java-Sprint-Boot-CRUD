@@ -2,6 +2,7 @@ package com.sphesp.contentcalendar.controller;
 
 import com.sphesp.contentcalendar.model.Content;
 import com.sphesp.contentcalendar.repository.ContentCollectionRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/content")
+@CrossOrigin // use the default config
 public class ContentController{
     private final ContentCollectionRepository repository;
 
@@ -32,11 +34,11 @@ public class ContentController{
     }
 
     /*
-        `@Requestbody`says that content will be passed as part of the request body
+        `@RequestBody`says that content will be passed as part of the request body
      */
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
-    public void create(@RequestBody Content content){
+    public void create(@Valid @RequestBody Content content){
         repository.save(content);
     }
 
