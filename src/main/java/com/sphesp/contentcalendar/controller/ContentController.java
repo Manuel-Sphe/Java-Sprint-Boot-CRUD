@@ -1,7 +1,10 @@
 package com.sphesp.contentcalendar.controller;
 
 import com.sphesp.contentcalendar.model.Content;
+import com.sphesp.contentcalendar.model.Status;
+import com.sphesp.contentcalendar.model.Type;
 import com.sphesp.contentcalendar.repository.ContentCollectionRepository;
+import com.sphesp.contentcalendar.repository.ContentJdbcTemplateRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,23 +17,24 @@ import java.util.List;
 @RequestMapping("/api/content")
 @CrossOrigin // use the default config
 public class ContentController{
-    private final ContentCollectionRepository repository;
 
-    public ContentController(ContentCollectionRepository repository) {
+    private final ContentJdbcTemplateRepository repository;
+
+    public ContentController(ContentJdbcTemplateRepository repository) {
         this.repository = repository;
     }
 
     // make a request to find all the pieces of content in the system.
     @GetMapping
     public List<Content> findAll(){
-        return repository.findAll();
+        return repository.getAllContent();
     }
 
     // Create Read Update
 
     @GetMapping("/{id}")
     public Content findById(@PathVariable  Integer id){
-        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Content Not Found"));
+        return repository.getContent(id);
     }
 
     /*
@@ -39,7 +43,7 @@ public class ContentController{
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public void create(@Valid @RequestBody Content content){
-        repository.save(content);
+        repository.createContent(content.title(),content.desc(),content.status(),content.contentType(),content.url());
     }
 
 
@@ -48,14 +52,13 @@ public class ContentController{
     public void update(@RequestBody Content  content, @PathVariable Integer id){
         if(!repository.existById(id))
             throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"Content not Found Exception");
-
-        repository.save(content);
+        repository.updateContent(content.title(),content.desc(),content.status(),content.contentType(),content.url());
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id){
-        repository.deleteById(id);
+        repository.deleteContent(id);
     }
 
 }
